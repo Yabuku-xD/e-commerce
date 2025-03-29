@@ -11,22 +11,19 @@ from scripts.db_utils import connect_to_database, execute_query
 logger = logging.getLogger(__name__)
 def analyze_time_based_trends(conn):
     logger.info("Analyzing time-based sales trends")
-    
-    # Daily sales
+
     daily_query = """
     SELECT * FROM vw_daily_sales
     ORDER BY sale_date
     """
     daily_sales = execute_query(conn, daily_query)
-    
-    # Monthly sales
+
     monthly_query = """
     SELECT * FROM vw_monthly_sales
     ORDER BY month
     """
     monthly_sales = execute_query(conn, monthly_query)
-    
-    # Quarterly sales
+
     quarterly_query = """
     SELECT 
         DATE_TRUNC('quarter', order_date) AS quarter,
@@ -39,8 +36,7 @@ def analyze_time_based_trends(conn):
     ORDER BY quarter
     """
     quarterly_sales = execute_query(conn, quarterly_query)
-    
-    # Calculate growth rates for monthly data
+
     if len(monthly_sales) > 1:
         monthly_sales['revenue_growth'] = monthly_sales['total_revenue'].pct_change() * 100
         monthly_sales['order_growth'] = monthly_sales['num_orders'].pct_change() * 100
@@ -53,16 +49,14 @@ def analyze_time_based_trends(conn):
     }
 def analyze_product_performance(conn):
     logger.info("Analyzing product performance")
-    
-    # Top products
+
     top_products_query = """
     SELECT * FROM vw_product_sales
     ORDER BY total_revenue DESC
     LIMIT 20
     """
     top_products = execute_query(conn, top_products_query)
-    
-    # Product categories
+
     categories_query = """
     SELECT * FROM vw_category_analysis
     ORDER BY total_revenue DESC
@@ -75,8 +69,7 @@ def analyze_product_performance(conn):
     }
 def analyze_geographic_distribution(conn):
     logger.info("Analyzing geographic distribution")
-    
-    # Sales by country
+
     country_query = """
     SELECT * FROM vw_country_sales
     ORDER BY total_revenue DESC
@@ -86,8 +79,7 @@ def analyze_geographic_distribution(conn):
     return country_sales
 def analyze_customer_segments(conn):
     logger.info("Analyzing customer segment performance")
-    
-    # Segment performance
+
     segment_query = """
     SELECT * FROM vw_segment_performance
     ORDER BY total_segment_revenue DESC
@@ -102,8 +94,7 @@ def save_analysis_results(analysis_results, output_dir):
     os.makedirs(os.path.join(output_dir, "visualizations"), exist_ok=True)
     
     file_paths = {}
-    
-    # Time-based analysis
+
     if 'time_based' in analysis_results:
         # Monthly sales trend
         if len(analysis_results['time_based']['monthly']) > 1:
@@ -121,8 +112,7 @@ def save_analysis_results(analysis_results, output_dir):
             plt.savefig(viz_path)
             file_paths['monthly_trend_viz'] = viz_path
             plt.close()
-        
-        # Save monthly data
+
         monthly_path = os.path.join(output_dir, "monthly_sales.csv")
         analysis_results['time_based']['monthly'].to_csv(monthly_path, index=False)
         file_paths['monthly_sales'] = monthly_path
@@ -215,26 +205,22 @@ def save_analysis_results(analysis_results, output_dir):
 
 def analyze_sales(db_config, output_dir=None):   
     logger.info("Starting sales analysis")
-    
-    # Connect to database
+
     conn = connect_to_database(db_config)
     
     try:
-        # Perform analysis
         time_based = analyze_time_based_trends(conn)
         product = analyze_product_performance(conn)
         geographic = analyze_geographic_distribution(conn)
         segments = analyze_customer_segments(conn)
-        
-        # Combine results
+
         analysis_results = {
             'time_based': time_based,
             'product': product,
             'geographic': geographic,
             'segments': segments
         }
-        
-        # Save results if output directory provided
+
         if output_dir:
             save_analysis_results(analysis_results, output_dir)
         
@@ -249,7 +235,6 @@ def analyze_sales(db_config, output_dir=None):
         conn.close()
 
 if __name__ == "__main__":
-    # Setup basic logging when run as a script
     logging.basicConfig(
         level=logging.INFO,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
