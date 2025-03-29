@@ -1,0 +1,19 @@
+# Data manipulation and analysis
+pandas
+numpy
+scipy
+# Database connectivity
+psycopg2-binary
+sqlalchemy
+# Data visualization
+matplotlib
+seaborn
+# Data acquisition
+requests
+faker
+# Jupyter notebooks
+jupyter
+notebook
+# Utility packages
+python-dotenv
+tqdm
