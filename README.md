@@ -74,6 +74,14 @@ Generate and use synthetic data instead of downloading:
 python main.py --steps all --sample
 ```
 
+### Resetting the Database
+
+If you need to reset the database and start fresh:
+
+```
+python reset_database.py
+```
+
 ## Data Model
 
 The project uses a relational data model with the following tables:
@@ -93,11 +101,16 @@ The project uses a relational data model with the following tables:
 - Monetary Value: How much a customer spends
 
 Customers are segmented into categories like:
-- Champions (high value, recent, frequent)
-- Loyal Customers (regular shoppers)
-- At Risk (valuable but haven't purchased recently)
-- New Customers (recent first purchase)
-- And more...
+- **Champions** (high value, recent, frequent purchases)
+- **Loyal Customers** (consistent shoppers with good recency)
+- **Potential Loyalists** (recent shoppers with moderate frequency/spending)
+- **New Customers** (recent first purchase)
+- **Promising** (recent shoppers with lower frequency/spending)
+- **At Risk** (high value, low recency)
+- **Need Attention** (moderate value, low recency)
+- **About to Sleep** (decreasing activity)
+- **Hibernating** (lowest activity, least recent customers)
+- **Cannot Lose** (valuable customers with declining activity)
 
 ### Sales Analysis
 
@@ -105,6 +118,14 @@ Customers are segmented into categories like:
 - Product performance analysis
 - Geographic sales distribution
 - Customer segment performance
+
+### Key Insights Available
+
+- Customer lifetime value by segment
+- Product category performance and trends
+- Geographic distribution of sales and customer base
+- Time-based patterns in purchasing behavior
+- Customer acquisition and retention metrics
 
 ## Visualization
 
@@ -143,21 +164,50 @@ e-commerce-analysis/
 ├── visualization/             # Visualization instructions
 │   ├── tableau_instructions.md
 │   └── powerbi_instructions.md
+├── logs/                      # Pipeline execution logs
 ├── config.py                  # Configuration settings
 ├── requirements.txt           # Python dependencies
 ├── README.md                  # Project documentation
+├── reset_database.py          # Utility to reset the database
 └── main.py                    # Main orchestration script
 ```
+
+## Performance Considerations
+
+Based on test runs with the UCI Online Retail dataset:
+- Processing ~540,000 records takes approximately 1-2 minutes
+- Database operations are optimized with proper indexing
+- Memory requirements are modest (~500MB RAM)
+- Visualization data is pre-aggregated using SQL views for optimal dashboard performance
 
 ## Extending the Project
 
 This project can be extended in several ways:
 
-1. **Add Predictive Analytics**: Implement customer churn prediction or sales forecasting
-2. **Integrate with APIs**: Connect to real e-commerce platforms via APIs
-3. **Add More Visualizations**: Create additional specialized dashboards
-4. **Implement A/B Testing Analysis**: Add support for analyzing marketing campaigns
-5. **Create a Web Application**: Develop a web interface using Flask or Django
+1. **Add Predictive Analytics**: 
+   - Implement customer churn prediction models
+   - Build sales forecasting using time series analysis
+   - Develop product recommendation systems
+
+2. **Integrate with APIs**: 
+   - Connect to Shopify, WooCommerce, or other e-commerce platforms
+   - Implement real-time data ingestion
+   - Add scheduled data refreshes
+
+3. **Enhance Visualizations**: 
+   - Create additional specialized dashboards
+   - Add interactive what-if analysis features
+   - Implement geographic heat maps for regional analysis
+
+4. **Marketing Analysis**:
+   - Add support for analyzing marketing campaigns
+   - Implement A/B testing analysis
+   - Add customer journey mapping
+
+5. **Web Application**: 
+   - Develop a web interface using Flask or Django
+   - Add user authentication and role-based access
+   - Enable custom report generation
 
 ## License
 
