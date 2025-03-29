@@ -4216,16 +4216,16 @@ customer_id,recency_score,frequency_score,monetary_score,rfm_score,segment
 18145.0,5,3,5,13,Champions
 18146.0,2,2,1,5,Hibernating
 18147.0,3,2,1,6,Promising
-18156.0,5,2,3,10,Cannot Lose
-18158.0,5,2,2,9,New Customers
-18159.0,1,1,3,5,About to Sleep
-18160.0,3,2,3,8,Cannot Lose
-18161.0,4,3,4,11,Loyal Customers
 18149.0,3,3,3,9,Potential Loyalists
 18150.0,4,3,3,10,Potential Loyalists
 18151.0,2,2,3,7,About to Sleep
 18154.0,5,2,2,9,New Customers
 18155.0,2,3,2,7,Cannot Lose
+18156.0,5,2,3,10,Cannot Lose
+18158.0,5,2,2,9,New Customers
+18159.0,1,1,3,5,About to Sleep
+18160.0,3,2,3,8,Cannot Lose
+18161.0,4,3,4,11,Loyal Customers
 18164.0,3,1,2,6,Promising
 18165.0,2,1,2,5,Hibernating
 18167.0,4,3,4,11,Loyal Customers

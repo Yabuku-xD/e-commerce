@@ -72,12 +72,41 @@ def check_tables_exist(conn):
     except Exception:
         return False
 
-def run_pipeline(steps=None):
+def check_data_exists(conn):
+    """
+    Check if data already exists in the database.
+    
+    Args:
+        conn: Database connection
+        
+    Returns:
+        True if data exists, False otherwise
+    """
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM customers")
+        customer_count = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) FROM products")
+        product_count = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) FROM orders")
+        order_count = cursor.fetchone()[0]
+        cursor.close()
+        
+        # If we have data in all three main tables, consider it populated
+        if customer_count > 0 and product_count > 0 and order_count > 0:
+            return True
+        return False
+    except Exception as e:
+        logger.warning(f"Error checking if data exists: {str(e)}")
+        return False
+
+def run_pipeline(steps=None, force_update=False):
     """
     Run the complete data pipeline or specific steps.
     
     Args:
         steps: List of steps to run. If None, run all steps.
+        force_update: If True, force processing even if data exists
     """
     all_steps = ["acquisition", "database", "processing", "rfm", "sales"]
     
@@ -86,14 +115,29 @@ def run_pipeline(steps=None):
     
     logger.info(f"Starting pipeline with steps: {', '.join(steps)}")
     
+    # Check if database and data already exist
+    data_exists = False
+    if "database" in steps:
+        conn = connect_to_database(config.DB_CONFIG)
+        tables_exist = check_tables_exist(conn)
+        
+        if tables_exist:
+            data_exists = check_data_exists(conn)
+            if data_exists and not force_update:
+                logger.info("Data already exists in the database. Use --force to reprocess.")
+            
+        conn.close()
+    
     # Step 1: Data Acquisition
-    if "acquisition" in steps:
+    if "acquisition" in steps and (not data_exists or force_update):
         logger.info("Step 1: Data Acquisition")
         data_path = acquire_data(
             output_dir=config.RAW_DATA_DIR, 
             dataset_url=config.DATASET_URL
         )
         logger.info(f"Data acquired and saved to {data_path}")
+    elif "acquisition" in steps and data_exists and not force_update:
+        logger.info("Skipping data acquisition - data already exists")
     
     # Step 2: Database Setup
     if "database" in steps:
@@ -132,7 +176,7 @@ def run_pipeline(steps=None):
         conn.close()
     
     # Step 3: Data Processing
-    if "processing" in steps:
+    if "processing" in steps and (not data_exists or force_update):
         logger.info("Step 3: Data Processing")
         process_data(
             input_dir=config.RAW_DATA_DIR,
@@ -140,24 +184,30 @@ def run_pipeline(steps=None):
             db_config=config.DB_CONFIG
         )
         logger.info("Data processing completed")
+    elif "processing" in steps and data_exists and not force_update:
+        logger.info("Skipping data processing - data already exists")
     
     # Step 4: RFM Analysis
-    if "rfm" in steps:
+    if "rfm" in steps and (not data_exists or force_update):
         logger.info("Step 4: Customer Segmentation (RFM Analysis)")
         perform_rfm_analysis(
             db_config=config.DB_CONFIG,
             output_dir=config.PROCESSED_DATA_DIR
         )
         logger.info("RFM analysis completed")
+    elif "rfm" in steps and data_exists and not force_update:
+        logger.info("Skipping RFM analysis - data already exists")
     
     # Step 5: Sales Analysis
-    if "sales" in steps:
+    if "sales" in steps and (not data_exists or force_update):
         logger.info("Step 5: Sales Analysis")
         analyze_sales(
             db_config=config.DB_CONFIG,
             output_dir=config.PROCESSED_DATA_DIR
         )
         logger.info("Sales analysis completed")
+    elif "sales" in steps and data_exists and not force_update:
+        logger.info("Skipping sales analysis - data already exists")
     
     # Update processing log
     if "database" in steps:
@@ -185,8 +235,13 @@ if __name__ == "__main__":
         choices=["acquisition", "database", "processing", "rfm", "sales", "all"],
         help="Specific pipeline steps to run"
     )
+    parser.add_argument(
+        "--force", 
+        action="store_true",
+        help="Force processing even if data already exists"
+    )
     args = parser.parse_args()
     
     steps_to_run = None if "all" in (args.steps or ["all"]) else args.steps
     
-    run_pipeline(steps=steps_to_run)
+    run_pipeline(steps=steps_to_run, force_update=args.force)

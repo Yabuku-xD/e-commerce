@@ -1,0 +1,104 @@
+2025-03-29 11:29:08,887 - __main__ - INFO - Starting pipeline with steps: acquisition, database, processing, rfm, sales
+2025-03-29 11:29:08,887 - scripts.db_utils - INFO - Connecting to PostgreSQL database: ecommerce_db
+2025-03-29 11:29:08,920 - __main__ - INFO - Step 1: Data Acquisition
+2025-03-29 11:29:08,921 - scripts.data_acquisition - INFO - Downloading dataset from https://archive.ics.uci.edu/ml/machine-learning-databases/00352/Online%20Retail.xlsx
+2025-03-29 11:29:10,433 - scripts.data_acquisition - INFO - Dataset downloaded successfully to C:\Users\Yabuku\Downloads\e-commerce\data\raw\online_retail.xlsx
+2025-03-29 11:29:10,433 - __main__ - INFO - Data acquired and saved to C:\Users\Yabuku\Downloads\e-commerce\data\raw\online_retail.xlsx
+2025-03-29 11:29:10,434 - __main__ - INFO - Step 2: Database Setup
+2025-03-29 11:29:10,434 - scripts.db_utils - INFO - Connecting to PostgreSQL database: ecommerce_db
+2025-03-29 11:29:10,462 - __main__ - INFO - Database tables already exist. Skipping creation.
+2025-03-29 11:29:10,463 - __main__ - INFO - Creating or updating analysis views...
+2025-03-29 11:29:10,463 - scripts.db_utils - INFO - Executing SQL file: database/analysis_views.sql
+2025-03-29 11:29:10,472 - scripts.db_utils - INFO - SQL file executed successfully: database/analysis_views.sql
+2025-03-29 11:29:10,472 - __main__ - INFO - Analysis views created or updated
+2025-03-29 11:29:10,472 - __main__ - INFO - Step 3: Data Processing
+2025-03-29 11:29:10,472 - scripts.data_processing - INFO - Processing data from C:\Users\Yabuku\Downloads\e-commerce\data\raw
+2025-03-29 11:29:29,332 - scripts.data_processing - INFO - Loaded raw data from C:\Users\Yabuku\Downloads\e-commerce\data\raw\online_retail.xlsx: 541909 rows
+2025-03-29 11:29:29,332 - scripts.data_processing - INFO - Columns in raw data: ['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate', 'UnitPrice', 'CustomerID', 'Country']
+2025-03-29 11:29:29,332 - scripts.data_processing - INFO - Starting data cleaning process
+2025-03-29 11:29:29,339 - scripts.data_processing - INFO - Actual columns in dataframe: ['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate', 'UnitPrice', 'CustomerID', 'Country']
+2025-03-29 11:29:29,439 - scripts.data_processing - INFO - Missing values before cleaning: 136534
+2025-03-29 11:29:29,737 - scripts.data_processing - INFO - Rows before cleaning: 541909
+2025-03-29 11:29:29,738 - scripts.data_processing - INFO - Rows after cleaning: 397275
+2025-03-29 11:29:29,738 - scripts.data_processing - INFO - Removed 144634 rows (26.69%)
+2025-03-29 11:29:29,774 - scripts.data_processing - INFO - Missing values after cleaning: 0
+2025-03-29 11:29:29,775 - scripts.data_processing - INFO - Extracting product categories
+2025-03-29 11:29:30,746 - scripts.data_processing - INFO - Extracted 11 product categories
+2025-03-29 11:29:30,747 - scripts.data_processing - INFO - Category distribution:
+Category
+Other         125331
+Gift           85429
+Decoration     59035
+Storage        49656
+Kitchen        30892
+Stationery     19027
+Food           11070
+Garden          9827
+Toys            4090
+Clothing        1545
+Bathroom        1373
+Name: count, dtype: int64
+2025-03-29 11:29:30,747 - scripts.data_processing - INFO - Transforming UCI Online Retail data to relational model
+2025-03-29 11:29:31,015 - scripts.data_processing - INFO - Created 4319 customer records
+2025-03-29 11:29:31,016 - scripts.data_processing - INFO - Created 3659 product records
+2025-03-29 11:29:31,016 - scripts.data_processing - INFO - Created 18406 order records
+2025-03-29 11:29:31,016 - scripts.data_processing - INFO - Created 397275 order item records
+2025-03-29 11:29:31,016 - scripts.data_processing - INFO - Saving processed data to C:\Users\Yabuku\Downloads\e-commerce\data\processed
+2025-03-29 11:29:31,024 - scripts.data_processing - INFO - Saved customers data to C:\Users\Yabuku\Downloads\e-commerce\data\processed\customers.csv
+2025-03-29 11:29:31,029 - scripts.data_processing - INFO - Saved products data to C:\Users\Yabuku\Downloads\e-commerce\data\processed\products.csv
+2025-03-29 11:29:31,065 - scripts.data_processing - INFO - Saved orders data to C:\Users\Yabuku\Downloads\e-commerce\data\processed\orders.csv
+2025-03-29 11:29:31,402 - scripts.data_processing - INFO - Saved order_items data to C:\Users\Yabuku\Downloads\e-commerce\data\processed\order_items.csv
+2025-03-29 11:29:31,402 - scripts.data_processing - INFO - Loading data to database
+2025-03-29 11:29:31,402 - scripts.db_utils - INFO - Connecting to PostgreSQL database: ecommerce_db
+2025-03-29 11:29:31,643 - scripts.data_processing - INFO - Inserted 4319 customer records
+2025-03-29 11:29:31,801 - scripts.data_processing - INFO - Inserted 3659 product records
+2025-03-29 11:29:32,934 - scripts.data_processing - INFO - Inserted/Updated 18406 order records
+2025-03-29 11:29:54,020 - scripts.data_processing - INFO - Inserted 397275 order item records
+2025-03-29 11:29:54,023 - scripts.data_processing - INFO - Database load completed successfully
+2025-03-29 11:29:54,047 - scripts.data_processing - INFO - Data processing completed successfully
+2025-03-29 11:29:54,080 - __main__ - INFO - Data processing completed
+2025-03-29 11:29:54,080 - __main__ - INFO - Step 4: Customer Segmentation (RFM Analysis)
+2025-03-29 11:29:54,080 - scripts.customer_segmentation - INFO - Starting RFM analysis
+2025-03-29 11:29:54,080 - scripts.db_utils - INFO - Connecting to PostgreSQL database: ecommerce_db
+2025-03-29 11:29:54,180 - scripts.customer_segmentation - INFO - Calculating RFM scores
+2025-03-29 11:29:54,201 - scripts.customer_segmentation - INFO - Customer segments created:
+segment
+Hibernating            958
+Champions              670
+Potential Loyalists    503
+Cannot Lose            431
+Loyal Customers        427
+About to Sleep         377
+New Customers          331
+Promising              306
+Need Attention         263
+At Risk                 53
+Name: count, dtype: int64
+2025-03-29 11:29:54,202 - scripts.customer_segmentation - INFO - Saving RFM analysis results to C:\Users\Yabuku\Downloads\e-commerce\data\processed
+2025-03-29 11:29:54,205 - scripts.customer_segmentation - INFO - Saved RFM data to C:\Users\Yabuku\Downloads\e-commerce\data\processed\customer_segments.csv
+2025-03-29 11:29:54,309 - scripts.customer_segmentation - INFO - Saved segment distribution visualization to C:\Users\Yabuku\Downloads\e-commerce\data\processed\segment_distribution.png
+2025-03-29 11:29:54,318 - matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-03-29 11:29:54,321 - matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-03-29 11:29:54,332 - matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-03-29 11:29:54,335 - matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-03-29 11:29:54,345 - matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-03-29 11:29:54,347 - matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-03-29 11:29:54,412 - scripts.customer_segmentation - INFO - Saved RFM score distribution visualization to C:\Users\Yabuku\Downloads\e-commerce\data\processed\rfm_score_distribution.png
+2025-03-29 11:29:54,413 - scripts.customer_segmentation - INFO - Loading RFM results to database
+2025-03-29 11:29:54,413 - scripts.db_utils - INFO - Connecting to PostgreSQL database: ecommerce_db
+2025-03-29 11:29:54,670 - scripts.customer_segmentation - INFO - Loaded 4319 customer segment records to database
+2025-03-29 11:29:54,671 - scripts.customer_segmentation - INFO - RFM analysis completed successfully
+2025-03-29 11:29:54,671 - __main__ - INFO - RFM analysis completed
+2025-03-29 11:29:54,671 - __main__ - INFO - Step 5: Sales Analysis
+2025-03-29 11:29:54,672 - scripts.sales_analysis - INFO - Starting sales analysis
+2025-03-29 11:29:54,672 - scripts.db_utils - INFO - Connecting to PostgreSQL database: ecommerce_db
+2025-03-29 11:29:54,698 - scripts.sales_analysis - INFO - Analyzing time-based sales trends
+2025-03-29 11:29:54,785 - scripts.sales_analysis - INFO - Analyzing product performance
+2025-03-29 11:29:55,692 - scripts.sales_analysis - INFO - Analyzing geographic distribution
+2025-03-29 11:29:55,738 - scripts.sales_analysis - INFO - Analyzing customer segment performance
+2025-03-29 11:29:55,747 - scripts.sales_analysis - INFO - Saving analysis results to C:\Users\Yabuku\Downloads\e-commerce\data\processed
+2025-03-29 11:29:56,067 - scripts.sales_analysis - INFO - Saved analysis results and visualizations to C:\Users\Yabuku\Downloads\e-commerce\data\processed
+2025-03-29 11:29:56,067 - scripts.sales_analysis - INFO - Sales analysis completed successfully
+2025-03-29 11:29:56,068 - __main__ - INFO - Sales analysis completed
+2025-03-29 11:29:56,068 - scripts.db_utils - INFO - Connecting to PostgreSQL database: ecommerce_db
+2025-03-29 11:29:56,095 - __main__ - INFO - Pipeline completed successfully
