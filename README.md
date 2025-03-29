@@ -141,37 +141,6 @@ Dashboards include:
 - Geographic Analysis
 - Customer Purchase Behavior
 
-## Project Structure
-
-```
-e-commerce-analysis/
-├── data/                      # Data directory
-│   ├── raw/                   # Raw data files
-│   └── processed/             # Processed data files
-├── database/                  # Database scripts
-│   ├── schema.sql             # Database schema
-│   ├── create_tables.sql      # Table creation scripts
-│   ├── load_data.sql          # Data import scripts
-│   └── analysis_views.sql     # SQL views for analysis
-├── notebooks/                 # Jupyter notebooks
-│   └── exploratory_analysis.ipynb
-├── scripts/                   # Python scripts
-│   ├── data_acquisition.py    # Data downloading/generation
-│   ├── data_processing.py     # Data cleaning and transformation
-│   ├── customer_segmentation.py # RFM analysis
-│   ├── sales_analysis.py      # Sales trends analysis
-│   └── db_utils.py            # Database utility functions
-├── visualization/             # Visualization instructions
-│   ├── tableau_instructions.md
-│   └── powerbi_instructions.md
-├── logs/                      # Pipeline execution logs
-├── config.py                  # Configuration settings
-├── requirements.txt           # Python dependencies
-├── README.md                  # Project documentation
-├── reset_database.py          # Utility to reset the database
-└── main.py                    # Main orchestration script
-```
-
 ## Performance Considerations
 
 Based on test runs with the UCI Online Retail dataset:
@@ -179,35 +148,6 @@ Based on test runs with the UCI Online Retail dataset:
 - Database operations are optimized with proper indexing
 - Memory requirements are modest (~500MB RAM)
 - Visualization data is pre-aggregated using SQL views for optimal dashboard performance
-
-## Extending the Project
-
-This project can be extended in several ways:
-
-1. **Add Predictive Analytics**: 
-   - Implement customer churn prediction models
-   - Build sales forecasting using time series analysis
-   - Develop product recommendation systems
-
-2. **Integrate with APIs**: 
-   - Connect to Shopify, WooCommerce, or other e-commerce platforms
-   - Implement real-time data ingestion
-   - Add scheduled data refreshes
-
-3. **Enhance Visualizations**: 
-   - Create additional specialized dashboards
-   - Add interactive what-if analysis features
-   - Implement geographic heat maps for regional analysis
-
-4. **Marketing Analysis**:
-   - Add support for analyzing marketing campaigns
-   - Implement A/B testing analysis
-   - Add customer journey mapping
-
-5. **Web Application**: 
-   - Develop a web interface using Flask or Django
-   - Add user authentication and role-based access
-   - Enable custom report generation
 
 ## License
 
