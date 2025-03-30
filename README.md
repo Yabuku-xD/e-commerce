@@ -13,6 +13,16 @@ This project provides a complete pipeline for processing and analyzing e-commerc
 5. **Sales Analysis**: Analyzes sales trends, product performance, and geographic distribution
 6. **Visualization**: Creates interactive dashboards in Tableau and/or Power BI
 
+## Visualizations
+
+Here are the Power BI dashboards created from the analysis:
+
+### Sales Overview Dashboard
+![Sales Overview Dashboard](visualization/powerbi/sales_dashboard.png)
+
+### Customer Segmentation Dashboard
+![Customer Segmentation Dashboard](visualization/powerbi/customer_segments_dashboard.png)
+
 ## Installation
 
 ### Prerequisites
@@ -128,11 +138,6 @@ Customers are segmented into categories like:
 - Customer acquisition and retention metrics
 
 ## Visualization
-
-The project includes instructions for creating interactive dashboards in both:
-
-1. **Tableau**: See `visualization/tableau_instructions.md`
-2. **Power BI**: See `visualization/powerbi_instructions.md`
 
 Dashboards include:
 - Sales Overview
