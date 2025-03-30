@@ -122,21 +122,6 @@ Customers are segmented into categories like:
 - **Hibernating** (lowest activity, least recent customers)
 - **Cannot Lose** (valuable customers with declining activity)
 
-### Sales Analysis
-
-- Time-based trends (daily, monthly, quarterly)
-- Product performance analysis
-- Geographic sales distribution
-- Customer segment performance
-
-### Key Insights Available
-
-- Customer lifetime value by segment
-- Product category performance and trends
-- Geographic distribution of sales and customer base
-- Time-based patterns in purchasing behavior
-- Customer acquisition and retention metrics
-
 ## Visualization
 
 Dashboards include:
