@@ -18,10 +18,10 @@ This project provides a complete pipeline for processing and analyzing e-commerc
 Here are the Power BI dashboards created from the analysis:
 
 ### Sales Overview Dashboard
-![Sales Overview Dashboard](visualization/powerbi/sales_dashboard.png)
+![Sales Overview Dashboard](visualization/1.png)
 
 ### Customer Segmentation Dashboard
-![Customer Segmentation Dashboard](visualization/powerbi/customer_segments_dashboard.png)
+![Customer Segmentation Dashboard](visualization/2.png)
 
 ## Installation
 
